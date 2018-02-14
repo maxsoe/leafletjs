@@ -1,14 +1,16 @@
-var map = new L.Map('mymap', {
-  center: new L.LatLng(51.51, -0.11),
-  zoom: 9
-});
-// var googleLayer = new L.Google('ROADMAP');
-// map.addLayer(googleLayer);
+// var map = new L.Map('mymap', {
+//   center: new L.LatLng(51.51, -0.11),
+//   zoom: 1
+// });
+
+var map = new L.Map('mymap').setView([51.51, -0.11], 10)
+
 
 var roads = L.gridLayer.googleMutant({
-    type: 'roadmap' // valid values are 'roadmap', 'satellite', 'terrain' and 'hybrid'
+  type: 'roadmap' // valid values are 'roadmap', 'satellite', 'terrain' and 'hybrid'
 }).addTo(map);
 
+// if we want to add custom styles to the map
 // var styled = L.gridLayer.googleMutant({
 //     type: 'roadmap',
 //     styles: [
@@ -18,14 +20,22 @@ var roads = L.gridLayer.googleMutant({
 // }).addTo(map);
 
 
+// var url = 'gpx/route1928482835.gpx'; // URL to your GPX file or the GPX itself
+var url = 'gpx/route1806114503.gpx'; // URL to your GPX file or the GPX itself
+var name = "";
+new L.GPX(url, {
+  async: true
+}).on('loaded', function(e) {
+  map.fitBounds(e.target.getBounds(), {
+    padding: [50, 50]
+  });
 
-// initialize the map
-  // var map = L.map('mymap').setView([42.35, -71.08], 13);
-  //
-  // // load a tile layer
-  // L.tileLayer('http://tiles.mapc.org/basemap/{z}/{x}/{y}.png',
-  //   {
-  //     attribution: 'Tiles by <a href="http://mapc.org">MAPC</a>, Data by <a href="http://mass.gov/mgis">MassGIS</a>',
-  //     maxZoom: 17,
-  //     minZoom: 9
-  //   }).addTo(map);
+  var gpx = e.target;
+  // output = e.target.get_distance();
+  // console.log("within initial function " + output);
+  getmydistance(gpx.get_distance());
+}).addTo(map);
+
+function getmydistance(param) {
+  console.log(param);
+};
