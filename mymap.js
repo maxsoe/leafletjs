@@ -34,8 +34,11 @@ new L.GPX(url, {
   // output = e.target.get_distance();
   // console.log("within initial function " + output);
   getmydistance(gpx.get_distance());
+  getmydistance(gpx.get_elevation_gain());
 }).addTo(map);
 
 function getmydistance(param) {
   console.log(param);
 };
+
+// TODO: work how to get elevation data
